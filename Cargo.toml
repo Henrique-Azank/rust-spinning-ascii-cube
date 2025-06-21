@@ -1,0 +1,14 @@
+[package]
+name = "rust_spinning_ascii_cube"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+name = "rust_spinning_ascii_cube"
+path = "src/lib.rs"
+
+[[bin]]
+name = "rust_spinning_ascii_cube"
+path = "src/main.rs"
+
+[dependencies]
