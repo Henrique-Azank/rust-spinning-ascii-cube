@@ -1,7 +1,8 @@
 
 # 🎲 ASCII Spinning Cube in Rust
 
-A terminal-based 3D spinning cube rendered in ASCII, written in Rust.  
+A terminal-based 3D spinning cube rendered in ASCII, written in Rust. Coded as a small re-write 
+of the C-based version implemented in this [Youtube video](https://www.youtube.com/watch?v=p09i_hoFdd0)
 
 ![Spinning Cube Demo](./assets/demo-gif.gif) 
 
