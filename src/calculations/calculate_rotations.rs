@@ -8,7 +8,10 @@ static C: f64 = 0.0;
     Calculate the rotated coordinates of the 3D point
     in the X axis.
 */
-pub fn calculate_x(i: f64, j: f64, k: f64) -> f64 {
+pub fn calculate_x(coordinates: (f64, f64, f64)) -> f64 {
+
+    // Get the vector values from the coordiates
+    let (i, j, k) = coordinates;
 
     // Use the static values to calculate the X component
     let x: f64 = j * A.sin() * B.sin() * C.cos()
@@ -25,7 +28,10 @@ pub fn calculate_x(i: f64, j: f64, k: f64) -> f64 {
     Calculate the rotated coordinates of the 3D point
     in the Y axis.
 */
-pub fn calculate_y(i: f64, j: f64, k: f64) -> f64 {
+pub fn calculate_y(coordinates: (f64, f64, f64)) -> f64 {
+
+    // Get the vector values from the coordiates
+    let (i, j, k) = coordinates;
 
     // Use the static values to calculate the Y component
     let y: f64 = j * A.cos() * C.cos()
@@ -42,7 +48,10 @@ pub fn calculate_y(i: f64, j: f64, k: f64) -> f64 {
     Calculate the rotated coordinates of the 3D point
     in the Z axis.
 */
-pub fn calculate_z(i: f64, j: f64, k: f64) -> f64 {
+pub fn calculate_z(coordinates: (f64, f64, f64)) -> f64 {
+
+    // Get the vector values from the coordiates
+    let (i, j, k) = coordinates;
 
     // Use the static values to calculate the Y component
     let z: f64 = k * A.cos() * B.cos()
