@@ -9,7 +9,7 @@ use std::io::{self, Write};
 */
 pub fn print_buffer(buffer: &[char], width: usize, height: usize) -> io::Result<()> {
     let mut stdout = io::stdout();
-    for k in 0..(width * height) {
+    for k in 0..=(width * height) {
         let c = if k % width != 0 {
             buffer[k]
         } else {

@@ -53,8 +53,8 @@ pub fn calculate_chars(
     // Horizontal offset
     horizontal_offset: f64,
     // Buffers to alter
-    buffer: &mut [f64; 7040],
-    char_buffer: &mut [char; 7040],
+    buffer: &mut [f64],
+    char_buffer: &mut [char],
     // Character to use for the surface
     surface_char: char,
 ) {

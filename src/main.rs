@@ -16,20 +16,20 @@ fn main() {
     const CUBE_WIDTH: f64 = 10.0;
 
     // Instantiate a distance from camera float
-    const DISTANCE_FROM_CAMERA: f64 = 60.0;
+    const DISTANCE_FROM_CAMERA: f64 = 150.0;
 
     // Backdrgound ASCII code
     const BACKGROUND_CHAR: char = ' ';
 
     // Instantiate a horizontal offset
-    const HORIZONTAL_OFFSET: f64 = - 2.0 * CUBE_WIDTH as f64;
+    const HORIZONTAL_OFFSET: f64 = CUBE_WIDTH / 2.0 as f64;
 
     // Instantiate an increment speed for the cube
-    const INCREMENT_SPEED: f64 = 0.1;
+    const INCREMENT_SPEED: f64 = 0.6;
 
     // Window dimensions
-    const WIDTH: usize = 160;
-    const HEIGHT: usize = 44;
+    const WIDTH: usize = 60;
+    const HEIGHT: usize = 30;
 
     // Instantiate a k1 constant factor
     const K1: f64 = 40.0;
@@ -48,8 +48,14 @@ fn main() {
     // Main running loop
     loop {
 
-        // Clear screen + reset cursor
-        print!("\x1b[2J\x1b[H");  
+        // print!("\x1b[H");
+        print!("\x1b[2J");  
+
+        // Clear the buffer
+        for i in 0..(WIDTH * HEIGHT) {
+            buffer[i] = 0.0;
+            char_buffer[i] = BACKGROUND_CHAR;
+        }
 
         // Instantiate a cube X
         let mut cube_x: f64 = -CUBE_WIDTH;
@@ -63,30 +69,37 @@ fn main() {
             // For loop through a cube Y
             while cube_y < CUBE_WIDTH {
 
-                // Instantiate a cube Z
-                let cube_z: f64 = -CUBE_WIDTH;
+                // Create the cube surfaces 
+                let cube_surfaces: [(f64, f64, f64, char); 6] = [
+                    (cube_x, cube_y, -CUBE_WIDTH, '@'), // Front face
+                    (CUBE_WIDTH, cube_y, cube_x, '!'), // Back face
+                    (-CUBE_WIDTH, cube_y, -cube_x, '-'), // Top face
+                    (-cube_x, cube_y, CUBE_WIDTH, '*'), // Bottom face
+                    (cube_x, -CUBE_WIDTH, -cube_y, '?'), // Left face
+                    (cube_x, CUBE_WIDTH, cube_y, '0'), // Right face
+                ];
 
-                // Get the cube surface coordinate
-                let coordinates: (f64, f64, f64) = (cube_x, cube_y, cube_z);
-
-                // Calculate the surface rotation
-                let new_coords = calculate_surface(
-                    coordinates,
-                    rotations,
-                    DISTANCE_FROM_CAMERA,
-                );
-
-                // Calculate the chars of the surface
-                calculate_chars(
-                    new_coords,
-                    WIDTH,
-                    HEIGHT,
-                    K1,
-                    HORIZONTAL_OFFSET,
-                    &mut buffer,
-                    &mut char_buffer,
-                    '0',
-                );
+                for &(cube_x, cube_y, cube_z, surface_char) in &cube_surfaces {
+                    // Get the cube surface coordinate
+                    let coordinates: (f64, f64, f64) = (cube_x, cube_y, cube_z);
+                    // Calculate the surface rotation
+                    let new_coords: (f64, f64, f64) = calculate_surface(
+                        coordinates,
+                        rotations,
+                        DISTANCE_FROM_CAMERA,
+                    );
+                    // Calculate the chars of the surface
+                    calculate_chars(
+                        new_coords,
+                        WIDTH,
+                        HEIGHT,
+                        K1,
+                        HORIZONTAL_OFFSET,
+                        &mut buffer,
+                        &mut char_buffer,
+                        surface_char,
+                    );
+                }
 
                 // Increment the cube Y
                 cube_y += INCREMENT_SPEED;
@@ -102,8 +115,12 @@ fn main() {
         }
 
         // Increment the rotation angles
-        rotations.0 += 0.05;
-        rotations.1 += 0.05;
-        rotations.2 += 0.01;
+        rotations.0 += 0.1;
+        rotations.1 += 0.1;
+        rotations.2 += 0.1;
+
+        // Sleep for a short duration to control the speed of the animation
+        std::thread::sleep(std::time::Duration::from_millis(100));
+
     }
 }
